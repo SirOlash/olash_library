@@ -8,9 +8,9 @@ class User(AbstractUser):
     phone = models.CharField(max_length=11, unique=True)
 
 
-class Author(User):
-    dob = models.DateField(blank=False, null=False)
-    dod = models.DateField(blank=True, null=True)
+# class Author(User):
+#     dob = models.DateField(blank=False, null=False)
+#     dod = models.DateField(blank=True, null=True)
 
 
 

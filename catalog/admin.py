@@ -12,6 +12,12 @@ class BookAdmin(admin.ModelAdmin):
     list_per_page = 10
 # admin.site.register(models.Book)
 
+@admin.register(models.Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'last_name']
+    search_fields = ['first_name', 'last_name']
+
+
 @admin.register(models.Genre)
 class GenreAdmin(admin.ModelAdmin):
     list_display = ['name']

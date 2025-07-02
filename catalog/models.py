@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-from user.models import Author
+# from user.models import Author
 
 
 # Create your models here.
@@ -30,6 +30,17 @@ class Language(models.Model):
     name = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="En")
     def __str__(self):
         return self.name
+
+class Author(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    # phone_number = models.CharField(max_length=11)
+    dob = models.DateField(blank=False, null=False)
+    dod = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.first_name
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
