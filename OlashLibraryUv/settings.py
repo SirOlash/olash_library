@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'catalog',
     'user',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,9 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.User'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ]
+# }

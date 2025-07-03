@@ -5,6 +5,7 @@ from django.views.generic import CreateView
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from . import serializers
@@ -95,4 +96,9 @@ def image_detail(request, pk):
 class BookImageViewSet(viewsets.ModelViewSet):
     queryset = BookImage.objects.all()
     serializer_class = BookImageSerializer
+    permission_classes = [IsAuthenticated]
+
+
+    def get_serializer_context(self):
+        return {"book_id": self.kwargs["book_pk"]}
 
