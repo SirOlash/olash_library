@@ -12,6 +12,11 @@ class BookAdmin(admin.ModelAdmin):
     list_per_page = 10
 # admin.site.register(models.Book)
 
+@admin.register(models.BookImage)
+class BookImageAdmin(admin.ModelAdmin):
+    list_display = ['book', 'image']
+    list_display_links = ['image']
+
 @admin.register(models.Author)
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name']

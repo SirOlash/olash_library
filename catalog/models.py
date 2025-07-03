@@ -53,6 +53,12 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+class BookImage(models.Model):
+    # title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="book_images", blank=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+
 class BookInstance(models.Model):
     LOAN_STATUS = (
         ("A", "AVAILABLE"),
@@ -73,7 +79,5 @@ class BookInstance(models.Model):
 
     def __str__(self):
         return self.book.title
-
-
 
 
