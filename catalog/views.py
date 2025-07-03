@@ -1,14 +1,18 @@
+from django.core.serializers import serialize
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 
-from .models import Book, Author
+from . import serializers
+from .models import Book, Author, BookImage
 from rest_framework.response import Response
-from .serializers import BookSerializer, AuthorSerializer
+from .serializers import BookSerializer, AuthorSerializer, BookImageSerializer
+
+
 # Create your views here.
 
 @api_view()
@@ -56,6 +60,11 @@ class GetUpdatedAuthorView(UpdateAPIView):
 def greet(request, name):
     return render(request, 'index.html', {'name': name})
 
+# @api_view(["GET"])
+# def image_detail(request, pk):
+#     book_image = BookImage.objects.get(pk=pk)
+#     serializer = BookImageSerializer(book_image)
+#     return Response(serializer.data)
 
 class AddAuthorView(CreateAPIView):
     queryset = Author.objects.all()
@@ -64,3 +73,26 @@ class AddAuthorView(CreateAPIView):
 class GetUpdateDeleteAuthorView(RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'PUT':
+            return BookSerializer
+        elif self.request.method == 'POST':
+            return AuthorSerializer
+
+        return BookSerializer
+
+@api_view(['GET'])
+def image_detail(request, pk):
+    book_image = get_object_or_404(BookImage, pk=pk)
+    serializer = BookImageSerializer(book_image)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+class BookImageViewSet(viewsets.ModelViewSet):
+    queryset = BookImage.objects.all()
+    serializer_class = BookImageSerializer
+

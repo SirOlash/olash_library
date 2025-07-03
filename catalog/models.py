@@ -50,12 +50,13 @@ class Book(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     author = models.ManyToManyField(Author, related_name="books")
 
+
     def __str__(self):
         return self.title
 
 class BookImage(models.Model):
     # title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="book_images", blank=True)
+    image = models.ImageField(upload_to="book/images", blank=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
 
@@ -74,10 +75,10 @@ class BookInstance(models.Model):
 
     class BookImage(models.Model):
         image = models.ImageField(upload_to="book/images", blank=True)
-        book = models.ForeignKey(Book, on_delete=models.CASCADE)
+        book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="images")
 
 
-    def __str__(self):
-        return self.book.title
+        def __str__(self):
+            return self.image.url
 
 
